@@ -4,6 +4,10 @@ import lombok.*;
 
 import java.util.Objects;
 
+/**
+ * Класс ApartmentDto предназначен для передачи данных о классе Apartment
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

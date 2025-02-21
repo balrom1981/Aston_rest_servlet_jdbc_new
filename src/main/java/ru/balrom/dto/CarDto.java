@@ -4,6 +4,10 @@ import lombok.*;
 
 import java.util.Objects;
 
+/**
+ * Класс CarDto предназначен для хранения и передачи данных о классе Car
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

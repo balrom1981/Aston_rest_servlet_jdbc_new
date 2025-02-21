@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class ApartmentRepository, предназначен для CRUD операций с объектом типа Apartment
+ */
 public class ApartmentRepository implements Repository<Apartment> {
     private final static String SELECTID = "SELECT * FROM appartment WHERE id=?";
     private final static String SELECTALL = "SELECT * FROM appartment";
@@ -16,10 +19,18 @@ public class ApartmentRepository implements Repository<Apartment> {
 
     private final DBConnector connector;
 
+    /**
+     * Конструктор, создающий подключение в БД MySql
+     */
     public ApartmentRepository() {
         connector = new DBConnector();
     }
 
+    /**
+     * получает объект типа Apartment по  id
+     * @param id - входной параметр id
+     * @return - возвращает объект типа Apartment
+     */
     @Override
     public Apartment get(int id) {
         Apartment apartment = null;
@@ -46,6 +57,9 @@ public class ApartmentRepository implements Repository<Apartment> {
         return apartment;
     }
 
+    /**
+     * @return возвращает List<Apartment>
+     */
     @Override
     public List<Apartment> getAll() {
         List<Apartment> list = new ArrayList<>();
@@ -65,6 +79,10 @@ public class ApartmentRepository implements Repository<Apartment> {
         return list;
     }
 
+    /**
+     * сохраняет объект типа Apartment
+     * @param apartment для сохранения в БД
+     */
     @Override
     public void save(Apartment apartment) {
         try (Connection connection = connector.getConnection();
@@ -79,6 +97,10 @@ public class ApartmentRepository implements Repository<Apartment> {
         }
     }
 
+    /**
+     * изменяет объект типа Apartment
+     * @param apartment для изменения
+     */
     @Override
     public void update(Apartment apartment) {
 
@@ -95,6 +117,10 @@ public class ApartmentRepository implements Repository<Apartment> {
         }
     }
 
+    /**
+     * удаляет объект типа Apartment по  id
+     * @param id входной параметр
+     */
     @Override
     public void delete(int id) {
 

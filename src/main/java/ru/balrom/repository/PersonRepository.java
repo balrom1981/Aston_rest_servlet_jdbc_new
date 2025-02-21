@@ -8,6 +8,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class PersonRepository, предназначен для CRUD операций с объектом типа Person
+ */
+
 public class PersonRepository implements Repository<Person> {
     private final static String SELECTID = "SELECT * FROM person WHERE id=?";
     private final static String SELECTALL = "SELECT * FROM person";
@@ -17,10 +21,18 @@ public class PersonRepository implements Repository<Person> {
 
     private final DBConnector connector;
 
+    /**
+     * Конструктор, создающий подключение в БД MySql
+     */
     public PersonRepository() {
         connector = new DBConnector();
     }
 
+    /**
+     * получает объект типа Person по  id
+     * @param id - входной параметр id
+     * @return - возвращает объект типа Person
+     */
     @Override
     public Person get(int id) {
         Person person = null;
@@ -47,6 +59,9 @@ public class PersonRepository implements Repository<Person> {
         return person;
     }
 
+    /**
+     * @return возвращает List<Person>
+     */
     @Override
     public List<Person> getAll() {
         List<Person> list = new ArrayList<>();
@@ -66,6 +81,10 @@ public class PersonRepository implements Repository<Person> {
         return list;
     }
 
+    /**
+     * сохраняет объект типа Person
+     * @param person для сохранения в БД
+     */
     @Override
     public void save(Person person) {
         try (Connection connection = connector.getConnection();
@@ -80,6 +99,11 @@ public class PersonRepository implements Repository<Person> {
         }
     }
 
+
+    /**
+     * изменяет объект типа Person
+     * @param person для изменения
+     */
     @Override
     public void update(Person person) {
 
@@ -96,6 +120,10 @@ public class PersonRepository implements Repository<Person> {
         }
     }
 
+    /**
+     * удаляет объект типа Person по  id
+     * @param id входной параметр
+     */
     @Override
     public void delete(int id) {
 

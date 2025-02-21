@@ -16,11 +16,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "carServlet", value = "/rest/v1/cars/*")
+/**
+ * class CarServlet получает и обрабатывает HTTP-запросы от пользователй.
+ */
+@WebServlet(name = "carServlet", value = "/api/v1/cars/*")
 public class CarServlet extends HttpServlet {
     private final Service<CarDto> serviceCar = new CarService();
     private final ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     * обрабатывает Get запросы от пользователей, получает объекты из БД
+     * @param request запрос от пользователя
+     * @param response ответ пользователю
+     * @throws ServletException исключение
+     * @throws IOException исключение
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,6 +64,13 @@ public class CarServlet extends HttpServlet {
         }
     }
 
+    /**
+     * обрабатывает Post запросы от пользователей, записывает новые объекты в БД
+     * @param request запрос от пользователя
+     * @param response ответ пользователю
+     * @throws ServletException исключение
+     * @throws IOException исключение
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -80,6 +97,13 @@ public class CarServlet extends HttpServlet {
 
     }
 
+    /**
+     * обрабатывает Put запросы от пользователей, изменяет существующие объекты в БД
+     * @param request запрос от пользователя
+     * @param response ответ пользователю
+     * @throws ServletException исключение
+     * @throws IOException исключение
+     */
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -107,6 +131,13 @@ public class CarServlet extends HttpServlet {
 
     }
 
+    /**
+     * обрабатывает Delete запросы от пользователей, удаляет объекты из БД
+     * @param request запрос от пользователя
+     * @param response ответ пользователю
+     * @throws ServletException исключение
+     * @throws IOException исключение
+     */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

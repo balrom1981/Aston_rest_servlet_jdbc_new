@@ -9,6 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class CarRepository, предназначен для CRUD операций с объектом типа Car
+ */
 public class CarRepository implements Repository<Car>{
     private final static String SELECTID = "SELECT * FROM car WHERE id=?";
     private final static String SELECTALL = "SELECT * FROM car";
@@ -18,10 +21,19 @@ public class CarRepository implements Repository<Car>{
 
     private final DBConnector connector;
 
+    /**
+     * Конструктор, создающий подключение в БД MySql
+     */
     public CarRepository() {
         connector = new DBConnector();
     }
 
+
+    /**
+     * получает объект типа Car по  id
+     * @param id - входной параметр id
+     * @return - возвращает объект типа Car
+     */
     @Override
     public Car get(int id) {
         Car car = null;
@@ -48,6 +60,10 @@ public class CarRepository implements Repository<Car>{
         return car;
     }
 
+
+    /**
+     * @return возвращает List<Car>
+     */
     @Override
     public List<Car> getAll() {
         List<Car> list = new ArrayList<>();
@@ -67,6 +83,10 @@ public class CarRepository implements Repository<Car>{
         return list;
     }
 
+    /**
+     * сохраняет объект типа Car
+     * @param car для сохранения в БД
+     */
     @Override
     public void save(Car car) {
         try (Connection connection = connector.getConnection();
@@ -81,6 +101,10 @@ public class CarRepository implements Repository<Car>{
         }
     }
 
+    /**
+     * изменяет объект типа Car
+     * @param car для изменения
+     */
     @Override
     public void update(Car car) {
 
@@ -97,6 +121,10 @@ public class CarRepository implements Repository<Car>{
         }
     }
 
+    /**
+     * удаляет объект типа Car по  id
+     * @param id входной параметр
+     */
     @Override
     public void delete(int id) {
 

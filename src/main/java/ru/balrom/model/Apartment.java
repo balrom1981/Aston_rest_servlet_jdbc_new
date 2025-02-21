@@ -2,6 +2,11 @@ package ru.balrom.model;
 
 import lombok.*;
 
+
+/**
+ * Класс Apartment хранит в себе информацию об городе, количестве комнат и владельце квартиры
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

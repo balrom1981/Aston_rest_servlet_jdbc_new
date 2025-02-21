@@ -2,6 +2,10 @@ package ru.balrom.model;
 
 import lombok.*;
 
+/**
+ * Класс Person хранит в себе информацию о имени, фамилии и возрасте человека
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

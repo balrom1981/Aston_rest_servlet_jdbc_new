@@ -4,6 +4,11 @@ package ru.balrom.mapper;
 import ru.balrom.dto.ApartmentDto;
 import ru.balrom.model.Apartment;
 
+/**
+ * class ApartmentMapper предназначен для преобразования объекта типа Apartment в ApartmentDto
+ * и объекта типа ApartmentDto в Apartment
+ */
+
 public class ApartmentMapper implements Mapper<Apartment, ApartmentDto> {
     @Override
     public Apartment fromDto(ApartmentDto apartmentDto) {

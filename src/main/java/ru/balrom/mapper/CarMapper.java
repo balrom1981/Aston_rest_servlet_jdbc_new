@@ -4,6 +4,11 @@ package ru.balrom.mapper;
 import ru.balrom.dto.CarDto;
 import ru.balrom.model.Car;
 
+/**
+ * class CarMapper предназначен для преобразования объекта типа Car в CarDto
+ * и объекта типа CarDto в Car
+ */
+
 public class CarMapper implements Mapper<Car, CarDto>{
     @Override
     public Car fromDto(CarDto carDto) {

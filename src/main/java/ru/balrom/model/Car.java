@@ -2,6 +2,10 @@ package ru.balrom.model;
 
 import lombok.*;
 
+/**
+ * Класс Car хранит в себе информацию об производителе, цвете и владельце автомобиля
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor
