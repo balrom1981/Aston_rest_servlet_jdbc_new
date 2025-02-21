@@ -1,4 +1,4 @@
-package ru.balrom.Aston_rest_servlet_jdbc.mapper;
+package ru.balrom.mapper;
 
 public interface Mapper<E,T> {
     E fromDto(T t);

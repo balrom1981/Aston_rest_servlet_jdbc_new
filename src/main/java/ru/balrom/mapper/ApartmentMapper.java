@@ -1,13 +1,14 @@
-package ru.balrom.Aston_rest_servlet_jdbc.mapper;
+package ru.balrom.mapper;
 
-import ru.balrom.Aston_rest_servlet_jdbc.dto.ApartmentDto;
-import ru.balrom.Aston_rest_servlet_jdbc.entity.Apartment;
+
+import ru.balrom.dto.ApartmentDto;
+import ru.balrom.model.Apartment;
 
 public class ApartmentMapper implements Mapper<Apartment, ApartmentDto> {
     @Override
     public Apartment fromDto(ApartmentDto apartmentDto) {
-        return Apartment.builder().id(apartmentDto.getId()).numberRooms(apartmentDto.getNumberRooms())
-                .idCity(apartmentDto.getIdCity()).build();
+        return Apartment.builder().id(apartmentDto.getId()).city(apartmentDto.getCity())
+                .roomAmount(apartmentDto.getRoomAmount()).personId(apartmentDto.getPersonId()).build();
     }
 
     @Override
@@ -15,7 +16,7 @@ public class ApartmentMapper implements Mapper<Apartment, ApartmentDto> {
         if (apartment==null){
             return null;
         }
-        return ApartmentDto.builder().id(apartment.getId()).numberRooms(apartment.getNumberRooms())
-                .idCity(apartment.getIdCity()).build();
+        return ApartmentDto.builder().id(apartment.getId()).city(apartment.getCity())
+                .roomAmount(apartment.getRoomAmount()).personId(apartment.getPersonId()).build();
     }
 }
