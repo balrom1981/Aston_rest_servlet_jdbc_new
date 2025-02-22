@@ -17,7 +17,7 @@ public class CarRepository implements Repository<Car>{
     private final static String SELECTALL = "SELECT * FROM car";
     private final static String INSERT = "INSERT INTO car (brand, colour, personId) VALUES(?, ?, ?)";
     private final static String UPDATE = "UPDATE car SET brand=?, colour=?, personId=? WHERE id=?";
-    private final static String DELETE  = "DELETE FROM car WHERE id=?";;
+    private final static String DELETE  = "DELETE FROM car WHERE id=?";
 
     private final DBConnector connector;
 
@@ -28,6 +28,9 @@ public class CarRepository implements Repository<Car>{
         connector = new DBConnector();
     }
 
+    public CarRepository(DBConnector connector) {
+        this.connector = connector;
+    }
 
     /**
      * получает объект типа Car по  id
@@ -46,10 +49,10 @@ public class CarRepository implements Repository<Car>{
 
             if (resultSet.next()) {
                 car = new Car();
-                car.setId(resultSet.getInt("id"));
-                car.setBrand(resultSet.getString("brand"));
-                car.setColour(resultSet.getString("colour"));
-                car.setPersonId(resultSet.getInt("personId"));
+                car.setId(resultSet.getInt(1));
+                car.setBrand(resultSet.getString(2));
+                car.setColour(resultSet.getString(3));
+                car.setPersonId(resultSet.getInt(4));
             }
             preparedStatement.close();
             resultSet.close();
@@ -71,10 +74,10 @@ public class CarRepository implements Repository<Car>{
              ResultSet resultSet = statement.executeQuery(SELECTALL)) {
             while (resultSet.next()) {
                 Car car = new Car();
-                car.setId(resultSet.getInt("id"));
-                car.setBrand(resultSet.getString("brand"));
-                car.setColour(resultSet.getString("colour"));
-                car.setPersonId(resultSet.getInt("personId"));
+                car.setId(resultSet.getInt(1));
+                car.setBrand(resultSet.getString(2));
+                car.setColour(resultSet.getString(3));
+                car.setPersonId(resultSet.getInt(4));
                 list.add(car);
             }
         } catch (SQLException | ClassNotFoundException exception) {

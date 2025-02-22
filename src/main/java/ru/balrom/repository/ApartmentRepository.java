@@ -26,6 +26,10 @@ public class ApartmentRepository implements Repository<Apartment> {
         connector = new DBConnector();
     }
 
+    public ApartmentRepository(DBConnector connector) {
+        this.connector = connector;
+    }
+
     /**
      * получает объект типа Apartment по  id
      * @param id - входной параметр id
@@ -43,10 +47,10 @@ public class ApartmentRepository implements Repository<Apartment> {
 
             if (resultSet.next()) {
                 apartment = new Apartment();
-                apartment.setId(resultSet.getInt("id"));
-                apartment.setCity(resultSet.getString("city"));
-                apartment.setRoomAmount(resultSet.getInt("roomAmount"));
-                apartment.setPersonId(resultSet.getInt("personId"));
+                apartment.setId(resultSet.getInt(1));
+                apartment.setCity(resultSet.getString(2));
+                apartment.setRoomAmount(resultSet.getInt(3));
+                apartment.setPersonId(resultSet.getInt(4));
             }
             preparedStatement.close();
             resultSet.close();
@@ -67,10 +71,10 @@ public class ApartmentRepository implements Repository<Apartment> {
              ResultSet resultSet = statement.executeQuery(SELECTALL)) {
             while (resultSet.next()) {
                 Apartment apartment = new Apartment();
-                apartment.setId(resultSet.getInt("id"));
-                apartment.setCity(resultSet.getString("city"));
-                apartment.setRoomAmount(resultSet.getInt("roomAmount"));
-                apartment.setPersonId(resultSet.getInt("personId"));
+                apartment.setId(resultSet.getInt(1));
+                apartment.setCity(resultSet.getString(2));
+                apartment.setRoomAmount(resultSet.getInt(3));
+                apartment.setPersonId(resultSet.getInt(4));
                 list.add(apartment);
             }
         } catch (SQLException | ClassNotFoundException exception) {

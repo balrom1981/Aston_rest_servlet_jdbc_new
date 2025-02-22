@@ -28,6 +28,10 @@ public class PersonRepository implements Repository<Person> {
         connector = new DBConnector();
     }
 
+    public PersonRepository(DBConnector connector) {
+        this.connector = connector;
+    }
+
     /**
      * получает объект типа Person по  id
      * @param id - входной параметр id
@@ -44,10 +48,10 @@ public class PersonRepository implements Repository<Person> {
 
             if (resultSet.next()) {
                 person = new Person();
-                person.setId(resultSet.getInt("id"));
-                person.setName(resultSet.getString("name"));
-                person.setSurname(resultSet.getString("surname"));
-                person.setAge(resultSet.getInt("age"));
+                person.setId(resultSet.getInt(1));
+                person.setName(resultSet.getString(2));
+                person.setSurname(resultSet.getString(3));
+                person.setAge(resultSet.getInt(4));
 
             }
             preparedStatement.close();
@@ -69,10 +73,10 @@ public class PersonRepository implements Repository<Person> {
              ResultSet resultSet = statement.executeQuery(SELECTALL)) {
             while (resultSet.next()) {
                 Person person = new Person();
-                person.setId(resultSet.getInt("id"));
-                person.setName(resultSet.getString("name"));
-                person.setSurname(resultSet.getString("surname"));
-                person.setAge(resultSet.getInt("age"));
+                person.setId(resultSet.getInt(1));
+                person.setName(resultSet.getString(2));
+                person.setSurname(resultSet.getString(3));
+                person.setAge(resultSet.getInt(4));
                 list.add(person);
             }
         } catch (SQLException | ClassNotFoundException exception) {
