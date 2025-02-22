@@ -22,6 +22,11 @@ public class CarService implements Service<CarDto> {
         mapper = new CarMapper();
     }
 
+    public CarService(CarRepository carRepository, CarMapper mapper) {
+        this.carRepository = carRepository;
+        this.mapper = mapper;
+    }
+
     /**
      * получает объект типа Car по  id
      * @param id - входной параметр id

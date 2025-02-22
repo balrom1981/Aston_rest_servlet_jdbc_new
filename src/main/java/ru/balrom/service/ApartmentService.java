@@ -22,6 +22,11 @@ public class ApartmentService implements Service<ApartmentDto>{
         mapper = new ApartmentMapper();
     }
 
+    public ApartmentService(ApartmentRepository apartmentRepository, ApartmentMapper mapper) {
+        this.apartmentRepository = apartmentRepository;
+        this.mapper = mapper;
+    }
+
     /**
      * получает объект типа Apartment по  id
      * @param id - входной параметр id

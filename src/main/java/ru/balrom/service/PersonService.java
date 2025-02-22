@@ -22,6 +22,11 @@ public class PersonService implements Service<PersonDto> {
         mapper = new PersonMapper();
     }
 
+    public PersonService(PersonRepository repository, PersonMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
+
     /**
      * получает объект типа Person по  id
      * @param id - входной параметр id
