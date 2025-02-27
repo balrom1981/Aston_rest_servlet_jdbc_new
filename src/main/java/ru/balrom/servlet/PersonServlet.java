@@ -160,7 +160,7 @@ public class PersonServlet extends HttpServlet {
             int id = Integer.parseInt(path.substring(1));
             servicePerson.delete(id);
             response.setStatus(HttpServletResponse.SC_OK);
-
+            response.getWriter().write("Person with id =" + id +" was deleted");
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write("Invalid path");

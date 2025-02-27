@@ -160,7 +160,7 @@ public class CarServlet extends HttpServlet {
             int id = Integer.parseInt(path.substring(1));
             serviceCar.delete(id);
             response.setStatus(HttpServletResponse.SC_OK);
-
+            response.getWriter().write("Car with id =" + id +" was deleted");
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write("Invalid path");

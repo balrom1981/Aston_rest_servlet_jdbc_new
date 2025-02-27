@@ -158,6 +158,7 @@ public class ApartmentServlet extends HttpServlet {
             int id = Integer.parseInt(path.substring(1));
             serviceApartment.delete(id);
             response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("Apartment with id =" + id +" was deleted");
 
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
