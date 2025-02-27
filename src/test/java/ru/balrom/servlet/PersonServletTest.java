@@ -34,7 +34,6 @@ class PersonServletTest {
     private HttpServletResponse response;
     @Mock
     private PersonService service;
-    @Mock
     private PersonServlet servlet;
     private final StringWriter stringWriter = new StringWriter();
     private List<PersonDto> expectedList;

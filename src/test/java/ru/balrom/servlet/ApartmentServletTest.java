@@ -35,7 +35,6 @@ class ApartmentServletTest {
     private HttpServletResponse response;
     @Mock
     private ApartmentService service;
-    @Mock
     private ApartmentServlet servlet;
     private final StringWriter stringWriter = new StringWriter();
     private List<ApartmentDto> expectedList;

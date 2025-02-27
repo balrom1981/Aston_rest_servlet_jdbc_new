@@ -34,7 +34,6 @@ class CarServletTest {
     private HttpServletResponse response;
     @Mock
     private CarService service;
-    @Mock
     private CarServlet servlet;
     private final StringWriter stringWriter = new StringWriter();
     private List<CarDto> expectedList;
