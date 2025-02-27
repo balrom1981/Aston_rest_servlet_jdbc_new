@@ -20,8 +20,19 @@ import java.util.List;
  */
 @WebServlet(name = "personServlet", value = "/api/v1/persons/*")
 public class PersonServlet extends HttpServlet {
-    private final Service<PersonDto> servicePerson = new PersonService();
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final Service<PersonDto> servicePerson;
+    private final ObjectMapper mapper;
+
+
+    public PersonServlet() {
+        servicePerson = new PersonService();
+        mapper = new ObjectMapper();
+    }
+
+    public PersonServlet(Service<PersonDto> servicePerson, ObjectMapper mapper) {
+        this.servicePerson = servicePerson;
+        this.mapper = mapper;
+    }
 
     /**
      * обрабатывает Get запросы от пользователей, получает объекты из БД
@@ -85,8 +96,9 @@ public class PersonServlet extends HttpServlet {
 
         BufferedReader body = request.getReader();
         StringBuilder stringBuilder = new StringBuilder();
-        while (body.ready()) {
-            stringBuilder.append(body.readLine());
+        String line;
+        while ((line = body.readLine()) != null) {
+            stringBuilder.append(line);
         }
         PersonDto current = mapper.readValue(stringBuilder.toString(), PersonDto.class);
         servicePerson.save(current);
@@ -118,8 +130,9 @@ public class PersonServlet extends HttpServlet {
 
         BufferedReader body = request.getReader();
         StringBuilder stringBuilder = new StringBuilder();
-        while (body.ready()) {
-            stringBuilder.append(body.readLine());
+        String line;
+        while ((line = body.readLine()) != null) {
+            stringBuilder.append(line);
         }
         PersonDto current = mapper.readValue(stringBuilder.toString(), PersonDto.class);
         servicePerson.update(current);

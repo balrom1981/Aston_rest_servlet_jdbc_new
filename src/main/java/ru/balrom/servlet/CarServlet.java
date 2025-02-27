@@ -21,8 +21,18 @@ import java.util.List;
  */
 @WebServlet(name = "carServlet", value = "/api/v1/cars/*")
 public class CarServlet extends HttpServlet {
-    private final Service<CarDto> serviceCar = new CarService();
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final Service<CarDto> serviceCar;
+    private final ObjectMapper mapper;
+
+    public CarServlet() {
+        serviceCar = new CarService();
+        mapper = new ObjectMapper();
+    }
+
+    public CarServlet(Service<CarDto> serviceCar, ObjectMapper mapper) {
+        this.serviceCar = serviceCar;
+        this.mapper = mapper;
+    }
 
     /**
      * обрабатывает Get запросы от пользователей, получает объекты из БД
@@ -86,8 +96,9 @@ public class CarServlet extends HttpServlet {
 
         BufferedReader body = request.getReader();
         StringBuilder stringBuilder = new StringBuilder();
-        while (body.ready()) {
-            stringBuilder.append(body.readLine());
+        String line;
+        while ((line = body.readLine()) != null) {
+            stringBuilder.append(line);
         }
         CarDto current = mapper.readValue(stringBuilder.toString(), CarDto.class);
         serviceCar.save(current);
@@ -119,8 +130,9 @@ public class CarServlet extends HttpServlet {
 
         BufferedReader body = request.getReader();
         StringBuilder stringBuilder = new StringBuilder();
-        while (body.ready()) {
-            stringBuilder.append(body.readLine());
+        String line;
+        while ((line = body.readLine()) != null) {
+            stringBuilder.append(line);
         }
         CarDto current = mapper.readValue(stringBuilder.toString(), CarDto.class);
         serviceCar.update(current);
