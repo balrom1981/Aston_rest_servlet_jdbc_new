@@ -43,9 +43,13 @@ class ApartmentServletTest {
     @BeforeEach
     void set(){
         servlet = new ApartmentServlet(service, mapper);
-        expectedList = List.of(ApartmentDto.builder().id(ID).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build(),
-                ApartmentDto.builder().id(5).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build(),
-                ApartmentDto.builder().id(10).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build());
+//        expectedList = List.of(ApartmentDto.builder().id(ID).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build(),
+//                ApartmentDto.builder().id(5).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build(),
+//                ApartmentDto.builder().id(10).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build());
+        expectedList.add(ApartmentDto.builder().id(ID).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build());
+        expectedList.add(ApartmentDto.builder().id(5).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build());
+        expectedList.add(ApartmentDto.builder().id(10).city(CITY).roomAmount(ROOM_NUMBER).personId(PERSON_ID).build());
+
     }
 
     @ParameterizedTest

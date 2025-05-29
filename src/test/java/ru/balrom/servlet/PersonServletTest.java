@@ -42,9 +42,12 @@ class PersonServletTest {
     @BeforeEach
     void set(){
         servlet = new PersonServlet(service, mapper);
-        expectedList = List.of(PersonDto.builder().id(ID).name(NAME).surname(SURNAME).age(AGE).build(),
-                PersonDto.builder().id(5).name(NAME).surname(SURNAME).age(AGE).build(),
-                PersonDto.builder().id(10).name(NAME).surname(SURNAME).age(AGE).build());
+//        expectedList = List.of(PersonDto.builder().id(ID).name(NAME).surname(SURNAME).age(AGE).build(),
+//                PersonDto.builder().id(5).name(NAME).surname(SURNAME).age(AGE).build(),
+//                PersonDto.builder().id(10).name(NAME).surname(SURNAME).age(AGE).build());
+        expectedList.add(PersonDto.builder().id(ID).name(NAME).surname(SURNAME).age(AGE).build());
+        expectedList.add(PersonDto.builder().id(5).name(NAME).surname(SURNAME).age(AGE).build());
+        expectedList.add(PersonDto.builder().id(10).name(NAME).surname(SURNAME).age(AGE).build());
     }
 
     @ParameterizedTest

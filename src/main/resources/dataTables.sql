@@ -6,14 +6,15 @@ values ('Ivan', 'Smirnov',  18),
 ('Elena', 'Sidorova',  22),
 ('Olga', 'Zadornova',  43);
 
-insert city (name)
-values ('Moscow'),
-('Paris'),
-('Berlin'),
-('London'),
-('Saint-Petersburg');
+insert car (brand, colour, personId)
+values ('BMW', 'black', 4),
+('Audi', 'white', 1),
+('Opel', 'yellow', 5),
+('Geeley', 'Green', 2),
+('VW', 'gray', 3),
+('Lada', 'eggplant', 6);
 
-insert apartment (city, roomAmount, personId)
+insert appartment (city, roomAmount, personId)
 values ('Moscow', 2, 3),
 ('Saint-Petersburg', 5, 1),
 ('Kazan', 1, 4),

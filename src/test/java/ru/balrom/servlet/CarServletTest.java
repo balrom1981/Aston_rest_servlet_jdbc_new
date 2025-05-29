@@ -42,9 +42,12 @@ class CarServletTest {
     @BeforeEach
     void set(){
         servlet = new CarServlet(service, mapper);
-        expectedList = List.of(CarDto.builder().id(ID).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build(),
-                CarDto.builder().id(5).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build(),
-                CarDto.builder().id(10).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build());
+//        expectedList = List.of(CarDto.builder().id(ID).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build(),
+//                CarDto.builder().id(5).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build(),
+//                CarDto.builder().id(10).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build());
+        expectedList.add(CarDto.builder().id(ID).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build());
+        expectedList.add(CarDto.builder().id(5).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build());
+        expectedList.add(CarDto.builder().id(10).brand(BRAND).colour(COLOUR).personId(PERSON_ID).build());
     }
 
     @ParameterizedTest
