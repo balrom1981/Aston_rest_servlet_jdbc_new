@@ -85,6 +85,11 @@ public class PersonRepository implements Repository<Person> {
         return list;
     }
 
+    @Override
+    public List<Person> getAllByPersonId(int personId) {
+        return null;
+    }
+
     /**
      * сохраняет объект типа Person
      * @param person для сохранения в БД

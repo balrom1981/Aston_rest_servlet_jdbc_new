@@ -46,6 +46,11 @@ public class PersonService implements Service<PersonDto> {
         return repository.getAll().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
+    @Override
+    public List<PersonDto> getAllByPersonId(int personId) {
+        return null;
+    }
+
     /**
      * сохраняет объект типа PersonDto преобразуя его в объект типа Person перед сохраннием
      */

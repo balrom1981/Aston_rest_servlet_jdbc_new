@@ -6,7 +6,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ru.balrom.dto.ApartmentDto;
+import ru.balrom.dto.CarDto;
 import ru.balrom.dto.PersonDto;
+import ru.balrom.service.ApartmentService;
+import ru.balrom.service.CarService;
 import ru.balrom.service.PersonService;
 import ru.balrom.service.Service;
 
@@ -21,25 +25,32 @@ import java.util.List;
 @WebServlet(name = "personServlet", value = "/api/v1/persons/*")
 public class PersonServlet extends HttpServlet {
     private final Service<PersonDto> servicePerson;
+    private final Service<CarDto> serviceCar;
+    private final Service<ApartmentDto> serviceApartment;
     private final ObjectMapper mapper;
 
 
     public PersonServlet() {
         servicePerson = new PersonService();
+        serviceCar = new CarService();
+        serviceApartment = new ApartmentService();
         mapper = new ObjectMapper();
     }
 
-    public PersonServlet(Service<PersonDto> servicePerson, ObjectMapper mapper) {
+    public PersonServlet(Service<PersonDto> servicePerson, Service<CarDto> serviceCar, Service<ApartmentDto> serviceApartment, ObjectMapper mapper) {
         this.servicePerson = servicePerson;
+        this.serviceCar = serviceCar;
+        this.serviceApartment = serviceApartment;
         this.mapper = mapper;
     }
 
     /**
      * обрабатывает Get запросы от пользователей, получает объекты из БД
-     * @param request запрос от пользователя
+     *
+     * @param request  запрос от пользователя
      * @param response ответ пользователю
      * @throws ServletException исключение
-     * @throws IOException исключение
+     * @throws IOException      исключение
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,30 +67,50 @@ public class PersonServlet extends HttpServlet {
             writer.write(json);
 
         } else {
-            int id = Integer.parseInt(path.substring(1));
-            PersonDto person = servicePerson.get(id);
-            try {
-                if (person == null) {
-                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    response.getWriter().write("Person with id="+id+" is not found");
-                    return;
+            String tail = path.substring(1);
+            String[] array = tail.split("/");
+            if (array.length > 1) {
+                String estate = array[1];
+                if (estate.equals("cars")){
+                    List<CarDto> cars = serviceCar.getAllByPersonId(Integer.parseInt(array[0]));
+                    String json = mapper.writeValueAsString(cars);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    writer.write(json);
+                } else if (estate.equals("apartments")) {
+                    List<ApartmentDto> apartments = serviceApartment.getAllByPersonId(Integer.parseInt(array[0]));
+                    String json = mapper.writeValueAsString(apartments);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    writer.write(json);
+                }else {
+                    response.getWriter().write("Bad Request");
                 }
-                String json = mapper.writeValueAsString(person);
-                response.setStatus(HttpServletResponse.SC_OK);
-                writer.write(json);
-            } catch (NumberFormatException exception) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().write("ID must be only a number");
+            } else {
+                int id = Integer.parseInt(array[0]);
+                PersonDto person = servicePerson.get(id);
+                try {
+                    if (person == null) {
+                        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        response.getWriter().write("Person with id=" + id + " is not found");
+                        return;
+                    }
+                    String json = mapper.writeValueAsString(person);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    writer.write(json);
+                } catch (NumberFormatException exception) {
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("ID must be only a number");
+                }
             }
         }
     }
 
     /**
      * обрабатывает Post запросы от пользователей, записывает новые объекты в БД
-     * @param request запрос от пользователя
+     *
+     * @param request  запрос от пользователя
      * @param response ответ пользователю
      * @throws ServletException исключение
-     * @throws IOException исключение
+     * @throws IOException      исключение
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -110,10 +141,11 @@ public class PersonServlet extends HttpServlet {
 
     /**
      * обрабатывает Put запросы от пользователей, изменяет существующие объекты в БД
-     * @param request запрос от пользователя
+     *
+     * @param request  запрос от пользователя
      * @param response ответ пользователю
      * @throws ServletException исключение
-     * @throws IOException исключение
+     * @throws IOException      исключение
      */
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
@@ -145,10 +177,11 @@ public class PersonServlet extends HttpServlet {
 
     /**
      * обрабатывает Delete запросы от пользователей, удаляет объекты из БД
-     * @param request запрос от пользователя
+     *
+     * @param request  запрос от пользователя
      * @param response ответ пользователю
      * @throws ServletException исключение
-     * @throws IOException исключение
+     * @throws IOException      исключение
      */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
@@ -160,7 +193,7 @@ public class PersonServlet extends HttpServlet {
             int id = Integer.parseInt(path.substring(1));
             servicePerson.delete(id);
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("Person with id =" + id +" was deleted");
+            response.getWriter().write("Person with id =" + id + " was deleted");
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write("Invalid path");

@@ -19,6 +19,11 @@ public interface Service<T> {
     List<T> getAll();
 
     /**
+     * получает список объетов типа Т по определенному параметру
+     */
+    List<T> getAllByPersonId(int personId);
+
+    /**
      * сохраняет объект типа Т
      */
     void save(T t);

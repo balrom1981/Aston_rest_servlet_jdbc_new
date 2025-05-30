@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * class ApartmentService, предназначен для CRUD операций с объектом типа ApartmentDto
  */
-public class ApartmentService implements Service<ApartmentDto>{
+public class ApartmentService implements Service<ApartmentDto> {
     private final ApartmentRepository apartmentRepository;
     private final ApartmentMapper mapper;
 
@@ -29,6 +29,7 @@ public class ApartmentService implements Service<ApartmentDto>{
 
     /**
      * получает объект типа Apartment по  id
+     *
      * @param id - входной параметр id
      * @return - возвращает объект типа ApartmentDto
      */
@@ -37,13 +38,20 @@ public class ApartmentService implements Service<ApartmentDto>{
         return mapper.toDto(apartmentRepository.get(id));
     }
 
+
     /**
      * получает List<ApartmentDto>
+     *
      * @return возвращает List<Apartment>
      */
     @Override
     public List<ApartmentDto> getAll() {
         return apartmentRepository.getAll().stream().map(mapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ApartmentDto> getAllByPersonId(int personId) {
+        return apartmentRepository.getAllByPersonId(personId).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     /**

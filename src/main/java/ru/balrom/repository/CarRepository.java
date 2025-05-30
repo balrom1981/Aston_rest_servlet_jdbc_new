@@ -1,8 +1,8 @@
 package ru.balrom.repository;
 
 
-
 import ru.balrom.db.DBConnector;
+import ru.balrom.model.Apartment;
 import ru.balrom.model.Car;
 
 import java.sql.*;
@@ -12,12 +12,13 @@ import java.util.List;
 /**
  * class CarRepository, предназначен для CRUD операций с объектом типа Car
  */
-public class CarRepository implements Repository<Car>{
+public class CarRepository implements Repository<Car> {
     private final static String SELECTID = "SELECT * FROM car WHERE id=?";
     private final static String SELECTALL = "SELECT * FROM car";
+    private final static String SELECTALLBYPERSONID = "SELECT * FROM car WHERE personId=?";
     private final static String INSERT = "INSERT INTO car (brand, colour, personId) VALUES(?, ?, ?)";
     private final static String UPDATE = "UPDATE car SET brand=?, colour=?, personId=? WHERE id=?";
-    private final static String DELETE  = "DELETE FROM car WHERE id=?";
+    private final static String DELETE = "DELETE FROM car WHERE id=?";
 
     private final DBConnector connector;
 
@@ -34,6 +35,7 @@ public class CarRepository implements Repository<Car>{
 
     /**
      * получает объект типа Car по  id
+     *
      * @param id - входной параметр id
      * @return - возвращает объект типа Car
      */
@@ -86,8 +88,36 @@ public class CarRepository implements Repository<Car>{
         return list;
     }
 
+    @Override
+    public List<Car> getAllByPersonId(int personId) {
+        List<Car> listWithPersonId = new ArrayList<>();
+
+        try (Connection connection = connector.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECTALLBYPERSONID);
+            preparedStatement.setInt(1, personId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Car car = new Car();
+                car.setId(resultSet.getInt(1));
+                car.setBrand(resultSet.getString(2));
+                car.setColour(resultSet.getString(3));
+                car.setPersonId(resultSet.getInt(4));
+                listWithPersonId.add(car);
+            }
+            preparedStatement.close();
+            resultSet.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listWithPersonId;
+    }
+
     /**
      * сохраняет объект типа Car
+     *
      * @param car для сохранения в БД
      */
     @Override
@@ -106,6 +136,7 @@ public class CarRepository implements Repository<Car>{
 
     /**
      * изменяет объект типа Car
+     *
      * @param car для изменения
      */
     @Override
@@ -126,6 +157,7 @@ public class CarRepository implements Repository<Car>{
 
     /**
      * удаляет объект типа Car по  id
+     *
      * @param id входной параметр
      */
     @Override

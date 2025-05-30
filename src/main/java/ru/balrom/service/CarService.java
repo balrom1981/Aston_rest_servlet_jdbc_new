@@ -46,6 +46,11 @@ public class CarService implements Service<CarDto> {
         return carRepository.getAll().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
+    @Override
+    public List<CarDto> getAllByPersonId(int personId) {
+        return carRepository.getAllByPersonId(personId).stream().map(mapper::toDto).collect(Collectors.toList());
+    }
+
     /**
      * сохраняет объект типа CarDto преобразуя его в объект типа Car перед сохраннием
      */

@@ -13,6 +13,7 @@ import java.util.List;
 public class ApartmentRepository implements Repository<Apartment> {
     private final static String SELECTID = "SELECT * FROM appartment WHERE id=?";
     private final static String SELECTALL = "SELECT * FROM appartment";
+    private final static String SELECTALLPERSONID = "SELECT * FROM appartment WHERE personId=?";
     private final static String INSERT ="INSERT INTO appartment (city, roomAmount, personId) VALUES(?, ?, ?)";
     private final static String UPDATE = "UPDATE appartment SET city=?, roomAmount=?, personId=? WHERE id=?";
     private final static String DELETE  = "DELETE FROM appartment WHERE id=?";
@@ -60,6 +61,32 @@ public class ApartmentRepository implements Repository<Apartment> {
         }
         return apartment;
     }
+    @Override
+    public List<Apartment> getAllByPersonId(int personId) {
+        List<Apartment> listWithPersonId = new ArrayList<>();
+
+        try(Connection connection = connector.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECTALLPERSONID);
+            preparedStatement.setInt(1, personId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Apartment apartment = new Apartment();
+                apartment.setId(resultSet.getInt(1));
+                apartment.setCity(resultSet.getString(2));
+                apartment.setRoomAmount(resultSet.getInt(3));
+                apartment.setPersonId(resultSet.getInt(4));
+                listWithPersonId.add(apartment);
+            }
+            preparedStatement.close();
+            resultSet.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listWithPersonId;
+    }
 
     /**
      * @return возвращает List<Apartment>
@@ -82,6 +109,7 @@ public class ApartmentRepository implements Repository<Apartment> {
         }
         return list;
     }
+
 
     /**
      * сохраняет объект типа Apartment
